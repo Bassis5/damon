@@ -128,8 +128,36 @@ function ultimate(object, key) {
 
 function update() {
   clearScreen();
+
+  if (player.health <= 0) {
+    text(
+      screen.width / 2 - 200,
+      screen.height / 2 - 50,
+      40,
+      "Player 2 win",
+      "red"
+    );
+    setTimeout(() => {
+      window.open("./index.html", "_self");
+    }, 3000);
+    stopUpdate();
+  }
+  else if (player2.health <= 0) {
+    text(
+      screen.width / 2 - 200,
+      screen.height / 2 - 50,
+      40,
+      "Player 1 win",
+      "red"
+    );
+    setTimeout(() => {
+      window.open("./index.html", "_self");
+    }, 3000);
+    stopUpdate();
+  }
+
   with (player) {
-    rectangle(x, y, w, h, "green");
+    picture(x, y,"./image/player1.png", w, h);
     rectangle(x, y - 15, w, 5, "gray");
     rectangle(x, y - 15, (w * health) / 100, 5, "red");
     xVel = 0;
@@ -158,7 +186,7 @@ function update() {
     }
   }
   with (player2) {
-    rectangle(x, y, w, h, "green");
+    picture(x, y,"./image/player2.png", w, h);
     rectangle(x, y - 15, w, 5, "gray");
     rectangle(x, y - 15, (w * health) / 100, 5, "red");
 
@@ -203,8 +231,7 @@ function update() {
       rectangle(x, y, r, r, "blue");
     }
     movement(ults[i]);
-    bulletDetection(player, ults[i], ults, i);
-    bulletDetection(player2, ults[i], ults, i);
+    bulletDetection(player, player2, ults[i], ults, i);
   }
 
   movement(player);
